@@ -54,6 +54,7 @@ type RestoreManager struct {
 	// private
 	namespace                         string
 	restoreTime                       string
+	env                               []corev1.EnvVar
 	volumeRestorePolicy               dpv1alpha1.VolumeClaimRestorePolicy
 	doReadyRestoreAfterClusterRunning bool
 	startingIndex                     int32
@@ -216,6 +217,7 @@ func (r *RestoreManager) BuildPrepareDataRestore(comp *component.SynthesizedComp
 				SourceTargetName: sourceTargetName,
 			},
 			RestoreTime: r.restoreTime,
+			Env:         r.env,
 			PrepareDataConfig: &dpv1alpha1.PrepareDataConfig{
 				RequiredPolicyForAllPodSelection: r.buildRequiredPolicy(sourceTarget),
 				SchedulingSpec:                   schedulingSpec,
